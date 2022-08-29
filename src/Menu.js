@@ -2,23 +2,23 @@ import React from "react";
 
 const Menu = ({ items }) => {
   return (
-    <section className="section-center">
-      {items.map((item) => {
-        const { id, title, price, img, desc } = item;
+    <id className="section-center">
+      {items.map((menuItem) => {
+        const { id, title, price, img, desc } = menuItem;
         return (
-          <article className="menu-item">
-            <img className="photo" src={img} alt={title} />
+          <article key={id} className="menu-item">
+            <img src={img} alt={title} className="photo" />
             <div className="item-info">
               <header>
                 <h4>{title}</h4>
                 <h4 className="price">${Math.ceil(price)}</h4>
               </header>
-              <div className="item-text">{desc}</div>
+              <p className="item-text">{desc}</p>
             </div>
           </article>
         );
       })}
-    </section>
+    </id>
   );
 };
 

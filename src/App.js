@@ -1,29 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Menu from "./Menu";
 import Categories from "./Categories";
-import data from "./data";
+import items from "./data";
 
 function App() {
-  const [items, setItems] = useState(data);
+  const [menuItems, setMenuItems] = useState(items);
+  const [categories, setCategories] = useState([]);
 
-  const handleFilter = (category) => {
+  useEffect(() => {
+    const allCategories = items.map((itemMenu) => itemMenu.category);
+    const uniqeCategories = ["all", ...new Set(allCategories)];
+    setCategories(uniqeCategories);
+  }, []);
+
+  const filterItems = (category) => {
     const filtered =
       category === "all"
-        ? data
-        : data.filter((item) => item.category === category);
-    setItems(filtered);
+        ? items
+        : items.filter((item) => item.category === category);
+    setMenuItems(filtered);
   };
 
   return (
     <main>
-      <section className="menu">
+      <section className="menu section">
         <div className="title">
           <h2>Our Menu</h2>
           <div className="underline"></div>
         </div>
+        <Categories onFilter={filterItems} categories={categories} />
+        <Menu items={menuItems} />
       </section>
-      <Categories onFilter={handleFilter} />
-      <Menu items={items} />
     </main>
   );
 }
